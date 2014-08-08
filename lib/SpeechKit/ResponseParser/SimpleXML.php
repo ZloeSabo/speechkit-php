@@ -12,9 +12,9 @@ class SimpleXML implements ResponseParserInterface
 {
     public function parse(ResponseInterface $result)
     {
-        $xml = simplexml_load_string($result->getContent());
+        @$xml = simplexml_load_string($result->getContent());
 
-        if($xml->attributes()->success == '1') {
+        if($xml !== false && $xml->attributes()->success == '1') {
             $result = [];
 
             foreach($xml->variant as $variant) {

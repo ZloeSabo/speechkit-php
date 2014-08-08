@@ -16,6 +16,28 @@ $ composer require zloesabo/speechkit-php:dev-master
 > SpeechKit follows the PSR-0 convention names for its classes, which means you can easily integrate `SpeechKit` classes loading in your own autoloader.
 
 ## Usage
+
+**Notice**: recognition result array uses confidence weights as keys. So use array_values if you need array starting with 0 index
+
+
+### Simple
+
+// Include dependencies installed with composer
+require 'vendor/autoload.php';
+
+use SpeechKit\SpeechKit,
+    SpeechKit\SpeechContent\SpeechFactory,
+    SpeechKit\SpeechContent\SpeechContentInterface,
+    ;
+
+$speechKit = new SpeechKit('your key here');
+$speech = SpeechFactory::fromData(__DIR__ . '/../Fixtures/Italian.mp3');
+$speech->setContentType(SpeechContentInterface::CONTENT_MP3);
+
+$result = $speechKit->recognize($speech);
+
+### Advanced
+
 ```php
 
 // Include dependencies installed with composer
@@ -53,4 +75,3 @@ $speech->setContentType(SpeechContentInterface::CONTENT_MP3);
 $result = $speechKit->recognize($speech);
 ```
 
-*Notice*: resulting array uses confidence weights as keys. So use array_values if you need array starting with 0 index

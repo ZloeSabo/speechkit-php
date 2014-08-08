@@ -9,6 +9,8 @@ use SpeechKit\Exception\SpeechKitException;
 use SpeechKit\ResponseParser\ResponseParserInterface;
 use SpeechKit\SpeechContent\SpeechFactory;
 use SpeechKit\SpeechContent\SpeechContentInterface;
+use SpeechKit\Uploader\Curl as CurlUploader;
+use SpeechKit\ResponseParser\SimpleXML as SimpleXMLParser;
 use SpeechKit\Uploader\UploaderInterface;
 
 class SpeechKit
@@ -19,11 +21,6 @@ class SpeechKit
     protected $responseParser;
     protected $response;
     protected $speech;
-
-    protected $defaults = [
-        'topic' => UploaderInterface::TOPIC_GENERAL,
-        'lang' =>  UploaderInterface::LANG_RU
-    ];
 
     /**
      * @param string $key
@@ -57,11 +54,12 @@ class SpeechKit
     public function recognize($data)
     {
         if(empty($this->uploader)) {
-            throw new SpeechKitException('No uploader have been set to handle upload');
+            $this->uploader = new CurlUploader();
+            $this->uploader->options()->setKey($this->key);
         }
 
         if(empty($this->responseParser)) {
-            throw new SpeechKitException('No response parser have been set');
+            $this->responseParser = new SimpleXMLParser();
         }
 
         if(!$data instanceof SpeechContentInterface) {
