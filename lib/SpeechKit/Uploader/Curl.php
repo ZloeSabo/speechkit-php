@@ -6,6 +6,7 @@
 namespace SpeechKit\Uploader;
 
 
+use SpeechKit\Response\Curl as CurlResponse;
 use SpeechKit\SpeechContent\SpeechContentInterface;
 use SpeechKit\SpeechContent\SpeechFileInterface;
 use SpeechKit\SpeechContent\SpeechStreamInterface;
@@ -19,7 +20,6 @@ class Curl extends AbstractUploader
             $this->server,
             $this->options()->getEncoded()
         );
-//        var_dump($url); exit;
 
         $ch = curl_init($url);
 
@@ -27,7 +27,8 @@ class Curl extends AbstractUploader
 
         curl_setopt_array($ch, [
             CURLOPT_UPLOAD => true,
-            CURLOPT_POST => true
+            CURLOPT_POST => true,
+            CURLOPT_RETURNTRANSFER => true
         ]);
 
         if($speech instanceof SpeechStreamInterface) {
@@ -39,10 +40,24 @@ class Curl extends AbstractUploader
 
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-        $result = curl_exec($ch);
+        $response = $this->execute($ch);
 
-        curl_close($ch);
-
-        return $result;
+        return $response;
     }
-} 
+
+    private function execute($curlHandle)
+    {
+        $response = new CurlResponse();
+
+        curl_setopt($curlHandle, CURLOPT_HEADERFUNCTION, [$response, 'headerParser']);
+
+        $rawResponse = curl_exec($curlHandle);
+        $response
+            ->setContent($rawResponse)
+            ->setCode(curl_getinfo($curlHandle, CURLINFO_HTTP_CODE)) //Need to do it manually as header function stores 100
+        ;
+
+        return $response;
+    }
+
+}

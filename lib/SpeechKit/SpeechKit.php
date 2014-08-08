@@ -5,7 +5,8 @@
 
 namespace SpeechKit;
 
-use SpeechKit\Exception\NoUploaderSetException;
+use SpeechKit\Exception\SpeechKitException;
+use SpeechKit\ResponseParser\ResponseParserInterface;
 use SpeechKit\SpeechContent\SpeechFactory;
 use SpeechKit\SpeechContent\SpeechContentInterface;
 use SpeechKit\Uploader\UploaderInterface;
@@ -41,8 +42,10 @@ class SpeechKit
         return $this;
     }
 
-    public function setResponseParser($parser)
+    public function setResponseParser(ResponseParserInterface $parser)
     {
+        $this->responseParser = $parser;
+
         return $this;
     }
 
@@ -54,11 +57,11 @@ class SpeechKit
     public function recognize($data)
     {
         if(empty($this->uploader)) {
-            throw new NoUploaderSetException('No uploader have been set to handle upload');
+            throw new SpeechKitException('No uploader have been set to handle upload');
         }
 
         if(empty($this->responseParser)) {
-
+            throw new SpeechKitException('No response parser have been set');
         }
 
         if(!$data instanceof SpeechContentInterface) {
@@ -67,6 +70,8 @@ class SpeechKit
 
         $this->response = $response = $this->uploader->upload($data);
 
-        return $response;
+        $result = $this->responseParser->parse($response);
+
+        return $result;
     }
 } 

@@ -6,7 +6,7 @@
 namespace SpeechKit\Exception;
 
 
-class NoUploaderSetException extends \RuntimeException implements Exception
+class SpeechKitException extends \RuntimeException implements Exception
 {
 
 } 
