@@ -22,6 +22,7 @@ $ composer require zloesabo/speechkit-php:dev-master
 
 ### Simple
 
+```php
 // Include dependencies installed with composer
 require 'vendor/autoload.php';
 
@@ -35,6 +36,7 @@ $speech = SpeechFactory::fromData(__DIR__ . '/../Fixtures/Italian.mp3');
 $speech->setContentType(SpeechContentInterface::CONTENT_MP3);
 
 $result = $speechKit->recognize($speech);
+``` 
 
 ### Advanced
 
