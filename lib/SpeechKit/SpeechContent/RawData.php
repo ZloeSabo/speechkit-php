@@ -5,13 +5,29 @@
 
 namespace SpeechKit\SpeechContent;
 
-
-use SpeechKit\Exception\NotImplementedException;
-
-class RawData
+class RawData extends AbstractSpeechContent implements SpeechStreamInterface, SpeechFileInterface
 {
-    public function __construct()
+    private $data;
+    private $offset = 0;
+
+    public function __construct($data)
     {
-        throw new NotImplementedException();
+        $this->data = $data;
+        $this->contentType = self::CONTENT_MP3;
+    }
+
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    public function getReadFunction()
+    {
+        return function($ch, $fd, $length) {
+            $result = substr($this->data, $this->offset, $length);
+            $this->offset += $length;
+
+            return $result;
+        };
     }
 } 

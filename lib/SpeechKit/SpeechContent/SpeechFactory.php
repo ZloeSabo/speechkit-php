@@ -10,10 +10,10 @@ class SpeechFactory
 {
     public static function fromData($data)
     {
-        if(is_file($data)) {
+        if(@is_file($data)) {
             return new File($data);
         } else {
-            return new RawDataSpeech($data);
+            return new RawData($data);
         }
     }
-} 
+}

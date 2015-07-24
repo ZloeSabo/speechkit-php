@@ -16,11 +16,6 @@ class File extends AbstractSpeechContent implements SpeechStreamInterface, Speec
         $this->contentType = self::CONTENT_MP3; //TODO type guessing solution
     }
 
-    public function getContentType()
-    {
-        return $this->contentType;
-    }
-
     public function getData()
     {
         return file_get_contents($this->file);
