@@ -28,12 +28,12 @@ require 'vendor/autoload.php';
 
 use SpeechKit\SpeechKit,
     SpeechKit\SpeechContent\SpeechFactory,
-    SpeechKit\SpeechContent\SpeechContentInterface,
+    SpeechKit\SpeechContent\SpeechInfoInterface,
     ;
 
 $speechKit = new SpeechKit('your key here');
 $speech = SpeechFactory::fromData(__DIR__ . '/../Fixtures/Italian.mp3');
-$speech->setContentType(SpeechContentInterface::CONTENT_MP3);
+$speech->setContentType(SpeechInfoInterface::CONTENT_MP3);
 
 $result = $speechKit->recognize($speech);
 ``` 
@@ -49,7 +49,7 @@ use SpeechKit\Uploader\Curl as CurlUploader,
     SpeechKit\ResponseParser\SimpleXML as SimpleXMLParser,
     SpeechKit\SpeechKit,
     SpeechKit\SpeechContent\SpeechFactory,
-    SpeechKit\SpeechContent\SpeechContentInterface,
+    SpeechKit\SpeechContent\SpeechInfoInterface,
     SpeechKit\Uploader\UploaderInterface
     ;
 
@@ -72,7 +72,7 @@ $speechKit
 $speech = SpeechFactory::fromData(__DIR__ . '/../Fixtures/Italian.mp3');
 
 //Can omit this in case of mp3 which is default
-$speech->setContentType(SpeechContentInterface::CONTENT_MP3);
+$speech->setContentType(SpeechInfoInterface::CONTENT_MP3);
 
 $result = $speechKit->recognize($speech);
 ```

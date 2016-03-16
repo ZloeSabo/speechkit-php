@@ -1,0 +1,4 @@
+suites:
+    speechkit:
+        namespace: SpeechKit
+        psr4_prefix: SpeechKit
