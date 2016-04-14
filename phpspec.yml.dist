@@ -2,3 +2,14 @@ suites:
     speechkit:
         namespace: SpeechKit
         psr4_prefix: SpeechKit
+
+extensions:
+    - PhpSpec\Extension\CodeCoverageExtension
+
+code_coverage:
+    format:
+        - html
+        - clover
+    output:
+        html: build/coverage
+        clover: build/coverage.xml
