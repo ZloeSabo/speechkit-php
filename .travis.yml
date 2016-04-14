@@ -17,4 +17,4 @@ script:
   - vendor/bin/phpspec run --format=pretty
 
 after_success:
-  - travis_retry php coveralls.phar
+  - travis_retry php coveralls.phar -v
