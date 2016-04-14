@@ -23,7 +23,7 @@ class UrlGeneratorSpec extends ObjectBehavior
 
     public function it_returns_uri_instance(SpeechInfoInterface $speech)
     {
-        $this->generate($speech)->shouldReturnAnInstanceOf(Uri::class);
+        $this->generate($speech)->shouldReturnAnInstanceOf('GuzzleHttp\Psr7\Uri');
     }
 
     public function it_generates_valid_url(SpeechInfoInterface $speech)

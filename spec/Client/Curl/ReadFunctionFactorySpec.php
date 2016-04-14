@@ -16,6 +16,6 @@ class ReadFunctionFactorySpec extends ObjectBehavior
 
     public function it_creates_read_function_for_given_stream(StreamInterface $stream)
     {
-        $this->create($stream)->shouldReturnAnInstanceOf(ReadFunction::class);
+        $this->create($stream)->shouldReturnAnInstanceOf('SpeechKit\Client\Curl\ReadFunction');
     }
 }

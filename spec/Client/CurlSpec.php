@@ -22,7 +22,7 @@ class CurlSpec extends ObjectBehavior
 
     public function it_is_client()
     {
-        $this->shouldImplement(ClientInterface::class);
+        $this->shouldImplement('SpeechKit\Client\ClientInterface');
     }
 
     //TODO test upload somewhere

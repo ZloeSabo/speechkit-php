@@ -22,7 +22,7 @@ class FileSpec extends ObjectBehavior
 
     public function it_is_speach_stream()
     {
-        $this->shouldImplement(SpeechStreamInterface::class);
+        $this->shouldImplement('SpeechKit\Speech\SpeechStreamInterface');
     }
 
     public function it_has_default_parameters()

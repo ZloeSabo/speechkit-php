@@ -11,10 +11,10 @@ before_install:
 
 install:
   - composer install --prefer-source --no-interaction --dev
-  - curl -s https://github.com/satooshi/php-coveralls/releases/download/v1.0.0/coveralls.phar > coveralls.phar
+  - curl -Ls https://github.com/satooshi/php-coveralls/releases/download/v1.0.0/coveralls.phar > coveralls.phar
 
 script:
   - vendor/bin/phpspec run --format=pretty
 
 after_success:
-  - travis_retry php coveralls.phar -v
+  - php coveralls.phar -v

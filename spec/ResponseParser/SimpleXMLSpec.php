@@ -26,7 +26,7 @@ class SimpleXMLSpec extends ObjectBehavior
     {
         $response->getBody()->willReturn($body);
         $body->getContents()->willReturn('DEADBEEF');
-        $this->shouldThrow(\SpeechKit\Exception\SpeechKitException::class)->duringParse($response);
+        $this->shouldThrow('\SpeechKit\Exception\SpeechKitException')->duringParse($response);
     }
 
     public function it_returns_hyphoteses_list(ResponseInterface $response, StreamInterface $body)
@@ -41,7 +41,7 @@ XML;
         $response->getBody()->willReturn($body);
         $body->getContents()->willReturn($xml);
 
-        $this->parse($response)->shouldReturnAnInstanceOf(HypothesesList::class);
+        $this->parse($response)->shouldReturnAnInstanceOf('SpeechKit\Response\HypothesesList');
         $this->parse($response)->shouldHaveHaveHyphotesis(0, 0.84, 'Dead beef');
         $this->parse($response)->shouldHaveHaveHyphotesis(1, 0.5, 'Something else');
     }
@@ -55,7 +55,7 @@ XML;
         $response->getBody()->willReturn($body);
         $body->getContents()->willReturn($xml);
 
-        $this->parse($response)->shouldReturnAnInstanceOf(HypothesesList::class);
+        $this->parse($response)->shouldReturnAnInstanceOf('SpeechKit\Response\HypothesesList');
         $this->parse($response)->shouldHaveCount(0);
     }
 

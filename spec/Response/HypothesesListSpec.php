@@ -19,6 +19,6 @@ class HypothesesListSpec extends ObjectBehavior
 
     public function it_fails_when_adding_non_hyphotesis()
     {
-        $this->shouldThrow(\InvalidArgumentException::class)->duringOffsetSet(0, new \stdClass());
+        $this->shouldThrow('\InvalidArgumentException')->duringOffsetSet(0, new \stdClass());
     }
 }
