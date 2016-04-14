@@ -1,10 +1,18 @@
 language: php
-php:
-  - 5.4
-  - 5.5
-  - 5.6
-  - hhvm
-  - 7
+
+matrix:
+  include:
+    - php: 5.4
+    - php: 5.5
+    - php: 5.6
+    - php: hhvm
+      env: GENERATE_COVERAGE='no'
+    - php: 7
+  fast_finish: true
+
+cache:
+  directories:
+    - $HOME/.composer/cache
 
 before_install:
   - composer selfupdate
@@ -12,9 +20,10 @@ before_install:
 install:
   - composer install --prefer-source --no-interaction --dev
   - curl -Ls https://github.com/satooshi/php-coveralls/releases/download/v1.0.0/coveralls.phar > coveralls.phar
+  - if [ "$GENERATE_COVERAGE" == "no" ]; then sed -i '/.*CodeCoverageExtension/d' phpspec.yml.dist; fi;
 
 script:
   - vendor/bin/phpspec run --format=pretty
 
 after_success:
-  - php coveralls.phar -v
+  - if [ "$GENERATE_COVERAGE" != "no" ]; then travis_retry php coveralls.phar -v; fi;
