@@ -1,18 +1,18 @@
 <?php
-/**
- * Created by Evgeny Soynov <saboteur@saboteur.me> .
- */
 
 namespace SpeechKit\Uploader;
 
 use Psr\Http\Message\ResponseInterface;
-use SpeechKit\Speech\SpeechStreamInterface;
+use SpeechKit\Speech\SpeechContentInterface;
 
+/**
+ * @author Evgeny Soynov<saboteur@saboteur.me>
+ */
 interface UploaderInterface
 {
     /**
-     * @param SpeechStreamInterface $speech speech to recognize
+     * @param SpeechContentInterface $speech speech to recognize
      * @return ResponseInterface
      */
-    public function upload(SpeechStreamInterface $speech);
+    public function upload(SpeechContentInterface $speech);
 }

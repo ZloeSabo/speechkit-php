@@ -51,7 +51,7 @@ class HeaderParser
     public function parseFunction($_, $headerLine)
     {
         if (false !== stripos($headerLine, self::HTTP_VERSION)) {
-            list($_, $code, $status) = explode(self::HTTP_STATUS_DELIMITER, $headerLine, 3);
+            list(, $code, $status) = explode(self::HTTP_STATUS_DELIMITER, $headerLine, 3);
             $this->statusInfo = [(int)$code, $status];
         } elseif (false !== stripos($headerLine, self::HEADER_DELIMITER)) {
             list($headerName, $headerValue) = explode(self::HEADER_DELIMITER, $headerLine, 2);

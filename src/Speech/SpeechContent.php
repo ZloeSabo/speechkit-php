@@ -2,12 +2,12 @@
 
 namespace SpeechKit\Speech;
 
-use GuzzleHttp\Psr7\Stream;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * @author Evgeny Soynov<saboteur@saboteur.me>
  */
-abstract class AbstractSpeechContent extends Stream implements SpeechStreamInterface
+class SpeechContent implements SpeechContentInterface
 {
     /** @var string */
     protected $contentType = SpeechInfoInterface::CONTENT_MP3;
@@ -17,6 +17,17 @@ abstract class AbstractSpeechContent extends Stream implements SpeechStreamInter
     protected $lang = SpeechInfoInterface::LANG_RU;
     /** @var string */
     protected $uuid;
+    /** @var StreamInterface */
+    protected $stream;
+
+    /**
+     * @param mixed $stream source of uploaded stream
+     */
+    public function __construct($stream)
+    {
+        $this->stream = \GuzzleHttp\Psr7\stream_for($stream);
+        $this->uuid = bin2hex(openssl_random_pseudo_bytes(16));
+    }
 
     /**
      * {@inheritdoc}
@@ -28,6 +39,7 @@ abstract class AbstractSpeechContent extends Stream implements SpeechStreamInter
 
     /**
      * @param string $type sets content type of current speech stream
+     * @codeCoverageIgnore
      */
     public function setContentType($type)
     {
@@ -44,6 +56,7 @@ abstract class AbstractSpeechContent extends Stream implements SpeechStreamInter
 
     /**
      * @param string $topic sets topic of current speech stream
+     * @codeCoverageIgnore
      */
     public function setTopic($topic)
     {
@@ -60,6 +73,7 @@ abstract class AbstractSpeechContent extends Stream implements SpeechStreamInter
 
     /**
      * @param string $lang sets language of current speech stream
+     * @codeCoverageIgnore
      */
     public function setLang($lang)
     {
@@ -76,9 +90,18 @@ abstract class AbstractSpeechContent extends Stream implements SpeechStreamInter
 
     /**
      * @param string $uuid sets uuid of current speech stream
+     * @codeCoverageIgnore
      */
     public function setUuid($uuid)
     {
         $this->uuid = $uuid;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getStream()
+    {
+        return $this->stream;
     }
 } 

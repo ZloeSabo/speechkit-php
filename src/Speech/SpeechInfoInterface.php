@@ -1,10 +1,10 @@
 <?php
-/**
- * Created by Evgeny Soynov <saboteur@saboteur.me> .
- */
 
 namespace SpeechKit\Speech;
 
+/**
+ * @author Evgeny Soynov<saboteur@saboteur.me>
+ */
 interface SpeechInfoInterface
 {
     const CONTENT_SPEEX = 'audio/x-speex';
@@ -28,8 +28,23 @@ interface SpeechInfoInterface
     const LANG_RU = 'ru-RU';
     const LANG_TR = 'tr-TR';
 
+    /**
+     * @return string
+     */
     public function getContentType();
+
+    /**
+     * @return string
+     */
     public function getTopic();
+
+    /**
+     * @return string
+     */
     public function getLang();
+
+    /**
+     * @return string
+     */
     public function getUuid();
 }

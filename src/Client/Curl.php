@@ -50,6 +50,6 @@ class Curl implements ClientInterface
         $headers = $this->headerParser->getHeaders();
         $body = \GuzzleHttp\Psr7\stream_for($body);
 
-        return new Response($status, $headers, $body, '1.1'. $reason);
+        return new Response($status, $headers, $body, '1.1', $reason);
     }
 }

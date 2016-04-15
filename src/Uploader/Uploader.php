@@ -4,7 +4,7 @@ namespace SpeechKit\Uploader;
 
 use GuzzleHttp\Psr7\Request;
 use SpeechKit\Client\ClientInterface;
-use SpeechKit\Speech\SpeechStreamInterface;
+use SpeechKit\Speech\SpeechContentInterface;
 
 /**
  * @author Evgeny Soynov<saboteur@saboteur.me>
@@ -28,13 +28,14 @@ class Uploader implements UploaderInterface
 
     /**
      * {@inheritdoc}
+     * @throws \InvalidArgumentException
      */
-    public function upload(SpeechStreamInterface $speech)
+    public function upload(SpeechContentInterface $speech)
     {
         $headers = ['Content-Type' => $speech->getContentType()];
         $uri = $this->urlGenerator->generate($speech);
 
-        $request = new Request('POST', $uri, $headers, $speech);
+        $request = new Request('POST', $uri, $headers, $speech->getStream());
 
         return $this->client->upload($request);
     }

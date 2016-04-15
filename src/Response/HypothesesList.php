@@ -7,6 +7,9 @@ namespace SpeechKit\Response;
  */
 class HypothesesList extends \SplFixedArray
 {
+    /**
+     * {@inheritdoc}
+     */
     public function offsetSet($index, $newval)
     {
         if(!empty($newval) && false === $newval instanceof Hypothesis) {
@@ -17,6 +20,9 @@ class HypothesesList extends \SplFixedArray
         parent::offsetSet($index, $newval);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     private function __clone()
     {
         // Only required for specs to work

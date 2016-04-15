@@ -4,9 +4,9 @@ namespace spec\SpeechKit\Speech;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use SpeechKit\Speech\SpeechStreamInterface;
+use SpeechKit\Speech\SpeechContentInterface;
 
-class FileSpec extends ObjectBehavior
+class SpeechContentSpec extends ObjectBehavior
 {
     private $path = 'php://memory';
 
@@ -17,12 +17,12 @@ class FileSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('SpeechKit\Speech\File');
+        $this->shouldHaveType('SpeechKit\Speech\SpeechContent');
     }
 
-    public function it_is_speach_stream()
+    public function it_has_methods_to_get_stream_and_its_meta()
     {
-        $this->shouldImplement('SpeechKit\Speech\SpeechStreamInterface');
+        $this->shouldImplement('SpeechKit\Speech\SpeechContentInterface');
     }
 
     public function it_has_default_parameters()

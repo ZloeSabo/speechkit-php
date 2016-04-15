@@ -1,11 +1,10 @@
 <?php
-/**
- * Created by Evgeny Soynov <saboteur@saboteur.me> .
- */
 
 namespace SpeechKit\Exception;
 
-
+/**
+ * @author Evgeny Soynov<saboteur@saboteur.me>
+ */
 class SpeechKitException extends \RuntimeException
 {
 
