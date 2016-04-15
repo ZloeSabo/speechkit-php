@@ -25,7 +25,7 @@ class UploaderSpec extends ObjectBehavior
         $this->shouldHaveType('SpeechKit\Uploader\Uploader');
     }
 
-    public function it_is_uploader()
+    public function it_has_upload_function()
     {
         $this->shouldImplement('SpeechKit\Uploader\UploaderInterface');
     }

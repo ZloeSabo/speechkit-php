@@ -5,7 +5,6 @@ namespace spec\SpeechKit\Client\Curl;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Http\Message\StreamInterface;
-use SpeechKit\Client\Curl\ReadFunction;
 
 class ReadFunctionFactorySpec extends ObjectBehavior
 {

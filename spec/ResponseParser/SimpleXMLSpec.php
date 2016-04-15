@@ -17,7 +17,7 @@ class SimpleXMLSpec extends ObjectBehavior
         $this->shouldHaveType('SpeechKit\ResponseParser\SimpleXML');
     }
     
-    public function it_is_response_parser()
+    public function it_has_parse_function()
     {
         $this->shouldImplement('SpeechKit\ResponseParser\ResponseParserInterface');
     }
@@ -63,7 +63,7 @@ XML;
     {
         return [
             'haveHaveHyphotesis' => function ($subject, $key, $confidence, $content) {
-                if (!array_key_exists($key, $subject)) {
+                if (!isset($subject[$key])) {
                     throw new FailureException(sprintf(
                         'Key "%s" does not exist in subject "%s".',
                         $key, get_class($subject)
