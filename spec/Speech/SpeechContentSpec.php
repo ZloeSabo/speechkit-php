@@ -32,4 +32,24 @@ class SpeechContentSpec extends ObjectBehavior
         $this->getLang()->shouldReturn('ru-RU');
         $this->getUuid()->shouldMatch('/^\w{32}$/');
     }
+
+    public function it_does_not_modify_setter_arguments()
+    {
+        $this->setContentType('content type');
+        $this->getContentType()->shouldBe('content type');
+
+        $this->setTopic('topic');
+        $this->getTopic()->shouldBe('topic');
+
+        $this->setLang('language');
+        $this->getLang()->shouldBe('language');
+
+        $this->setUuid('uuid');
+        $this->getUuid()->shouldBe('uuid');
+    }
+    
+    public function it_wraps_given_source_to_stream()
+    {
+        $this->getStream()->shouldReturnAnInstanceOf('\Psr\Http\Message\StreamInterface');
+    }
 }

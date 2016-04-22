@@ -11,6 +11,7 @@ use SpeechKit\Speech\SpeechContentInterface;
 interface UploaderInterface
 {
     /**
+     * Upload given content to Speech API server
      * @param SpeechContentInterface $speech speech to recognize
      * @return ResponseInterface
      */

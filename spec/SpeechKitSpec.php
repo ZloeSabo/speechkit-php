@@ -34,4 +34,10 @@ class SpeechKitSpec extends ObjectBehavior
 
         $this->recognize($speech)->shouldReturn('hyphoteses list');
     }
+
+    public function it_is_initializable_with_only_key()
+    {
+        $this->beConstructedWith($this->key);
+        $this->shouldHaveType('SpeechKit\SpeechKit');
+    }
 }

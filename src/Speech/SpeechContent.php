@@ -39,7 +39,6 @@ class SpeechContent implements SpeechContentInterface
 
     /**
      * @param string $type sets content type of current speech stream
-     * @codeCoverageIgnore
      */
     public function setContentType($type)
     {
@@ -56,7 +55,6 @@ class SpeechContent implements SpeechContentInterface
 
     /**
      * @param string $topic sets topic of current speech stream
-     * @codeCoverageIgnore
      */
     public function setTopic($topic)
     {
@@ -73,7 +71,6 @@ class SpeechContent implements SpeechContentInterface
 
     /**
      * @param string $lang sets language of current speech stream
-     * @codeCoverageIgnore
      */
     public function setLang($lang)
     {
@@ -90,7 +87,6 @@ class SpeechContent implements SpeechContentInterface
 
     /**
      * @param string $uuid sets uuid of current speech stream
-     * @codeCoverageIgnore
      */
     public function setUuid($uuid)
     {
