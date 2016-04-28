@@ -1,7 +1,10 @@
 speechkit-php
 =============
+[![Build Status](https://travis-ci.org/ZloeSabo/speechkit-php.svg?branch=master)](https://travis-ci.org/ZloeSabo/speechkit-php)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ZloeSabo/speechkit-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ZloeSabo/speechkit-php/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/ZloeSabo/speechkit-php/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/ZloeSabo/speechkit-php/?branch=master)
 
-Yandex SpeechKit for PHP
+[Yandex SpeechKit](https://tech.yandex.com/speechkit/) PHP library.
 
 ## Installation
 
