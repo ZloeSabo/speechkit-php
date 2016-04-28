@@ -43,7 +43,7 @@ class Curl implements ClientInterface
         curl_setopt_array($ch, $options);
 
         $body = curl_exec($ch);
-        if(0 !== curl_errno($ch)) {
+        if (0 !== curl_errno($ch)) {
             throw new SpeechKitException(curl_error($ch), curl_errno($ch));
         }
         list($status, $reason) = $this->headerParser->getStatusInfo();

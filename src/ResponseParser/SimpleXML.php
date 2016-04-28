@@ -23,21 +23,21 @@ class SimpleXML implements ResponseParserInterface
     public function parse(ResponseInterface $response)
     {
         $contents = $response->getBody()->getContents();
-        $xml = simplexml_load_string($contents, 'SimpleXMLElement', LIBXML_NOERROR|LIBXML_NOWARNING);
-        
-        if(false === $xml instanceof \SimpleXMLElement) {
+        $xml = simplexml_load_string($contents, 'SimpleXMLElement', LIBXML_NOERROR | LIBXML_NOWARNING);
+
+        if (false === $xml instanceof \SimpleXMLElement) {
             throw new SpeechKitException(
                 sprintf('Could not parse response contents: %s', $contents)
             );
         }
 
-        if(self::SUCCESSFUL_RESULT !== (int)$xml->attributes()->success) {
+        if (self::SUCCESSFUL_RESULT !== (int)$xml->attributes()->success) {
             return new HypothesesList();
         }
 
         $result = new HypothesesList(count($xml->variant));
         $current = 0;
-        foreach($xml->variant as $variant) {
+        foreach ($xml->variant as $variant) {
             $confidence = (float)$variant->attributes()->confidence;
             $result[$current] = new Hypothesis($confidence, (string)$variant);
             $current++;

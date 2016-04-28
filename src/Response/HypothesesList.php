@@ -12,7 +12,7 @@ class HypothesesList extends \SplFixedArray
      */
     public function offsetSet($index, $newval)
     {
-        if(!empty($newval) && false === $newval instanceof Hypothesis) {
+        if (!empty($newval) && false === $newval instanceof Hypothesis) {
             throw new \InvalidArgumentException(
                 sprintf('HypothesesList could only contain Hypothesis, %s given.', get_class($newval))
             );
