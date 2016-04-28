@@ -10,15 +10,17 @@ SpeechKit uses Composer, please checkout the [composer website](http://getcompos
 Add SpeechKit in your composer.json and you can go ahead:
 
 ```bash
-$ composer require zloesabo/speechkit-php:dev-master
+composer require zloesabo/speechkit-php
 ```
 
-> SpeechKit follows the PSR-0 convention names for its classes, which means you can easily integrate `SpeechKit` classes loading in your own autoloader.
+> SpeechKit follows the PSR-4 convention names for its classes, which means you can easily integrate `SpeechKit` classes loading in your own autoloader.
+
+## For users of old version
+
+Usage of previous version is strongly discouraged as it lacked concept and testing.
+However, if you sure you want to use previous version of library, require it with ```composer require zloesabo/speechkit-php:~1.0```
 
 ## Usage
-
-**Notice**: recognition result array uses confidence weights as keys. So use array_values if you need array starting with 0 index
-
 
 ### Simple
 
@@ -26,54 +28,81 @@ $ composer require zloesabo/speechkit-php:dev-master
 // Include dependencies installed with composer
 require 'vendor/autoload.php';
 
-use SpeechKit\SpeechKit,
-    SpeechKit\SpeechContent\SpeechFactory,
-    SpeechKit\SpeechContent\SpeechInfoInterface,
-    ;
+use SpeechKit\Response\HypothesesList;
+use SpeechKit\Response\Hypothesis;
+use SpeechKit\Speech\SpeechContent;
+use SpeechKit\SpeechKit;
 
-$speechKit = new SpeechKit('your key here');
-$speech = SpeechFactory::fromData(__DIR__ . '/../Fixtures/Italian.mp3');
-$speech->setContentType(SpeechInfoInterface::CONTENT_MP3);
+$key = 'your-key-here';
 
+$speechKit = new SpeechKit($key);
+
+//It can be any type of stream. File, string, instance of StreamInterface, etc.
+$source = fopen(__DIR__.'/some/path/to/file.mp3', 'r');
+
+$speech = new SpeechContent($source);
+
+//Defaults will be used: mp3, general topic, russian language
+/** @var HypothesesList $result */
 $result = $speechKit->recognize($speech);
-``` 
+
+/** @var Hypothesis $hyphotesis */
+foreach ($result as $hyphotesis) {
+    echo sprintf(
+        'Confidence: %.2f Content: %s',
+        $hyphotesis->getConfidence(),
+        $hyphotesis->getContent()
+    ), PHP_EOL;
+}
+```
 
 ### Advanced
 
 ```php
 
-// Include dependencies installed with composer
 require 'vendor/autoload.php';
 
-use SpeechKit\Uploader\Curl as CurlUploader,
-    SpeechKit\ResponseParser\SimpleXML as SimpleXMLParser,
-    SpeechKit\SpeechKit,
-    SpeechKit\SpeechContent\SpeechFactory,
-    SpeechKit\SpeechContent\SpeechInfoInterface,
-    SpeechKit\Uploader\UploaderInterface
-    ;
+use SpeechKit\Client\Curl;
+use SpeechKit\Response\HypothesesList;
+use SpeechKit\Response\Hypothesis;
+use SpeechKit\ResponseParser\SimpleXML;
+use SpeechKit\Speech\SpeechContent;
+use SpeechKit\Speech\SpeechContentInterface;
+use SpeechKit\SpeechKit;
+use SpeechKit\Uploader\Uploader;
+use SpeechKit\Uploader\UrlGenerator;
 
-$uploader = new CurlUploader;
+$key = 'your-key-here';
 
-//General topic and russian language are by default so you can omit next 4 lines
-$uploader->options()
-    ->setTopic(UploaderInterface::TOPIC_GENERAL)
-    ->setLang(UploaderInterface::LANG_RU)
-;
+$urlGenerator = new UrlGenerator($key);
 
-$parser = new SimpleXMLParser;
+//You could use any type of client which implements ClientInterface
+$client = new Curl();
+$uploader = new Uploader($urlGenerator, $client);
 
-$speechKit = new SpeechKit('your key here');
-$speechKit
-    ->setUploader($uploader)
-    ->setResponseParser($parser)
-;
+//You could use any type of parser which implements ResponseParserInterface
+$responseParser = new SimpleXML();
 
-$speech = SpeechFactory::fromData(__DIR__ . '/../Fixtures/Italian.mp3');
+$speechKit = new SpeechKit($key, $uploader, $responseParser);
 
-//Can omit this in case of mp3 which is default
-$speech->setContentType(SpeechInfoInterface::CONTENT_MP3);
+$source = fopen(__DIR__.'/some/path/to/file.mp3', 'r');
+$speech = new SpeechContent($source);
 
+//These settings are default, so you can skip setting them
+$speech->setContentType(SpeechContentInterface::CONTENT_MP3);
+$speech->setTopic(SpeechContentInterface::TOPIC_GENERAL);
+$speech->setLang(SpeechContentInterface::LANG_RU);
+$speech->setUuid(bin2hex(openssl_random_pseudo_bytes(16)));
+
+/** @var HypothesesList $result */
 $result = $speechKit->recognize($speech);
-```
 
+/** @var Hypothesis $hyphotesis */
+foreach ($result as $hyphotesis) {
+    echo sprintf(
+        'Confidence: %.2f Content: %s',
+        $hyphotesis->getConfidence(),
+        $hyphotesis->getContent()
+    ), PHP_EOL;
+}
+```
